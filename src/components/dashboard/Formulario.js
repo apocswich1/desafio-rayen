@@ -98,9 +98,9 @@ const BootstrapButton2 = styled(Button)({
 const FormularioContainer = (props) => {
  const { detalle, add, handleAdd, handleEditar, edit } = props.props;
 
-  const [ formState, setFormState ] = useState({ 
+  const [ formState, setFormState ] = useState(!add ? { 
     ...detalle
-  });
+  }:{});
   console.log(props)
 
   const agregarTutorial = () => {

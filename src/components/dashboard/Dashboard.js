@@ -119,7 +119,7 @@ function DashboardContent() {
     setListar(false);
     setAgregar(true);
     setEditar(false);
-   // setDetalle({});
+    //setDetalle({});
   }
 
   const editarTutorial = () => {
@@ -218,9 +218,11 @@ function DashboardContent() {
             >
               Tutoriales
             </Typography>
-            <IconButton onClick={()=>editarTutorial()}color="inherit">
+            {!listar && (
+              <IconButton onClick={()=>editarTutorial()}color="inherit">
               <EditIcon />
             </IconButton>
+            )}
           </Toolbar>
         </AppBar>
 
@@ -244,7 +246,7 @@ function DashboardContent() {
             <Formulario detalle={detalle} add={agregar} edit={editar} handleAdd={handleAdd} handleEditar={handleEdit}/>
             )}
 
-          {(!listar && agregar) && (
+          {(!listar && agregar && !detalle) && (
             <Formulario detalle={detalle} add={agregar} edit={editar} handleAdd={handleAdd} handleEditar={handleEdit}/>
             )}
 
