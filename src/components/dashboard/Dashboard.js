@@ -25,6 +25,7 @@ import MenuItem from '@mui/material/MenuItem';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import Stack from '@mui/material/Stack';
+import { SnackbarProvider, useSnackbar } from 'notistack';
 
 function Copyright(props) {
   return (
@@ -87,12 +88,22 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = createTheme();
 
+function IntegrationNotistack() {
+  return (
+    <SnackbarProvider maxSnack={3}>
+      <DashboardContent />
+    </SnackbarProvider>
+  );
+}
+
 function DashboardContent() {
   const [open, setOpen] = React.useState(false);
   const [listar, setListar] = React.useState(true);
   const [agregar, setAgregar] = React.useState(false);
   const [tutoriales, setTutoriales] = React.useState([]);
   const [detalle, setDetalle] = React.useState();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -106,30 +117,32 @@ function DashboardContent() {
   const agregartutorial = () => {
     setListar(false);
     setAgregar(true);
-
   }
 
   const handleAdd = () => {
+    enqueueSnackbar('Tutorial guardado con éxito!', {  });
     setListar(true);
     setAgregar(false);
-
+    fetchTutorials();
   }
+
+  const fetchTutorials = () => {
+    fetch('https://rayentutorialtestapp.azurewebsites.net/tutorials', {
+      method: 'get',
+      mode: 'cors',
+    }).then(function (respuesta) {
+      respuesta.json().then(body => {
+        setTutoriales(body)
+      });
+    }).catch(function (err) {
+      // Error :(
+    });
+  };
 
   useEffect(() => {
     let mounted = true;
     let tutoriales = [];
-    const fetchTutorials = () => {
-      fetch('https://rayentutorialtestapp.azurewebsites.net/tutorials', {
-        method: 'get',
-        mode: 'cors',
-      }).then(function (respuesta) {
-        respuesta.json().then(body => {
-          setTutoriales(body)
-        });
-      }).catch(function (err) {
-        // Error :(
-      });
-    };
+    
     if(listar){
       fetchTutorials();
     }
@@ -201,7 +214,7 @@ function DashboardContent() {
             )}
 
             {(!listar && agregar) && (
-            <Formulario detalle={detalle} add={true} handleAdd/>
+            <Formulario detalle={detalle} add={true} handleAdd={handleAdd}/>
             )}
 
             {listar && (
@@ -244,5 +257,7 @@ function DashboardContent() {
 }
 
 export default function Dashboard() {
-  return <DashboardContent />;
+  return (
+    <IntegrationNotistack />
+)
 }

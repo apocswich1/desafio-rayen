@@ -85,11 +85,10 @@ const FormularioContainer = (props) => {
       }).then(function(respuesta) {
         respuesta.json().then(body => {
           console.log(body);
-//          actualizar(msg, body);
+          handleAdd();
         });
       }).catch(function (error) {
         // Error :(
-          alert()
         console.log(error)
       });
   }
