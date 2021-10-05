@@ -110,6 +110,11 @@ function DashboardContent() {
     setOpen(!open);
   };
 
+  const volver = () => {
+    setListar(true);
+    setAgregar(false);
+    fetchTutorials();  };
+
   const select = (id) => {
     fetchTutorialsById(id);
     setListar(false);
@@ -207,7 +212,11 @@ function DashboardContent() {
             sx={{
               pr: '24px', // keep right padding when drawer closed
             }}
-          >
+          > {!listar && (
+            <IconButton onClick={()=>volver()}color="inherit">
+              {"<"}
+          </IconButton>
+          )}
             <Typography
               component="h1"
               variant="h6"
