@@ -122,6 +122,26 @@ const FormularioContainer = (props) => {
       });
   }
 
+  const eliminarTutorial = () => {
+  
+  fetch(`https://rayentutorialtestapp.azurewebsites.net/deletetutorial/${formState.id}`, {
+  method: 'delete',
+  mode: 'cors',
+  headers : { 
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+   },
+      }).then(function(respuesta) {
+        respuesta.json().then(body => {
+          console.log(body);
+          handleEditar();
+        });
+      }).catch(function (error) {
+        // Error :(
+        console.log(error)
+      });
+  }
+
   const handleFieldChange = event => {
     console.log(formState)
     event.persist();
@@ -194,11 +214,18 @@ const FormularioContainer = (props) => {
         </BootstrapButton>
         )}
         {edit && (
+          <React.Fragment>
+           <BootstrapButton           
+           onClick={eliminarTutorial}
+           variant="contained" disableRipple>
+           ELIMINAR
+         </BootstrapButton>
           <BootstrapButton           
           onClick={editarTutorial}
           variant="contained" disableRipple>
-          EDITAR
+          MODIFICAR
         </BootstrapButton>
+        </React.Fragment>
         )}
                   </Box>
       </Paper>
