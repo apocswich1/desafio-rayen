@@ -100,6 +100,7 @@ function DashboardContent() {
   const [open, setOpen] = React.useState(false);
   const [listar, setListar] = React.useState(true);
   const [agregar, setAgregar] = React.useState(false);
+  const [editar, setEditar] = React.useState(false);
   const [tutoriales, setTutoriales] = React.useState([]);
   const [detalle, setDetalle] = React.useState();
 
@@ -119,11 +120,29 @@ function DashboardContent() {
     setAgregar(true);
   }
 
+  const editartutorial = () => {
+    setEditar(true);
+  }
+
   const handleAdd = () => {
     enqueueSnackbar('Tutorial guardado con éxito!', {  });
     setListar(true);
     setAgregar(false);
     fetchTutorials();
+  }
+
+  const handleDeleteAll = () => {
+    fetch('https://rayentutorialtestapp.azurewebsites.net/deletetutorials', {
+      method: 'delete',
+      mode: 'cors',
+    }).then(function (respuesta) {
+      respuesta.json().then(body => {
+        setTutoriales([])
+      });
+    }).catch(function (err) {
+      // Error :(
+    });
+    enqueueSnackbar('Tutoriales eliminados con éxito!', {  });
   }
 
   const fetchTutorials = () => {
@@ -232,7 +251,7 @@ function DashboardContent() {
 
                   <div style={{ textAlign: "center", margin: "30px auto" }}>
                     <Stack spacing={2} sx={{ width: "200px" }}>
-                      <Button align="center" variant="outlined">Eliminar todos</Button>
+                      <Button align="center" variant="outlined" onClick={()=>handleDeleteAll()}>Eliminar todos</Button>
                     </Stack>
                   </div>
                   <Box sx={{ height: 150, transform: 'translateZ(0px)', flexGrow: 1 }}>
