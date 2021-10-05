@@ -74,9 +74,13 @@ const FormularioContainer = (props) => {
 
     console.log(params);
   
-  fetch('https://rayentutorialtestapp.azurewebsites.net/createtutorial', {
+  fetch("https://rayentutorialtestapp.azurewebsites.net/createtutorial", {
   method: 'post',
   mode: 'cors',
+  headers : { 
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+   },
   body: JSON.stringify(params),
       }).then(function(respuesta) {
         respuesta.json().then(body => {
@@ -85,6 +89,7 @@ const FormularioContainer = (props) => {
         });
       }).catch(function (error) {
         // Error :(
+          alert()
         console.log(error)
       });
   }
