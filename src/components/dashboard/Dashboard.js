@@ -119,7 +119,7 @@ function DashboardContent() {
     setListar(false);
     setAgregar(true);
     setEditar(false);
-    setDetalle({});
+   // setDetalle({});
   }
 
   const editarTutorial = () => {
@@ -244,9 +244,9 @@ function DashboardContent() {
             <Formulario detalle={detalle} add={agregar} edit={editar} handleAdd={handleAdd} handleEditar={handleEdit}/>
             )}
 
-          {/*(!listar && agregar) && (
+          {(!listar && agregar) && (
             <Formulario detalle={detalle} add={agregar} edit={editar} handleAdd={handleAdd} handleEditar={handleEdit}/>
-            )*/}
+            )}
 
 
             {listar && (
