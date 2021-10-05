@@ -118,16 +118,28 @@ function DashboardContent() {
   const agregartutorial = () => {
     setListar(false);
     setAgregar(true);
+    setEditar(false);
+    setDetalle({});
   }
 
-  const editartutorial = () => {
+  const editarTutorial = () => {
     setEditar(true);
+    setListar(false);
+    setAgregar(false);
   }
 
   const handleAdd = () => {
     enqueueSnackbar('Tutorial guardado con éxito!', {  });
     setListar(true);
     setAgregar(false);
+    fetchTutorials();
+  }
+
+  const handleEdit = () => {
+    enqueueSnackbar('Tutorial editado con éxito!', {  });
+    setListar(true);
+    setAgregar(false);
+    setEditar(false);
     fetchTutorials();
   }
 
@@ -206,7 +218,7 @@ function DashboardContent() {
             >
               Tutoriales
             </Typography>
-            <IconButton color="inherit">
+            <IconButton onClick={()=>editarTutorial()}color="inherit">
               <EditIcon />
             </IconButton>
           </Toolbar>
@@ -229,12 +241,13 @@ function DashboardContent() {
             <Grid container spacing={3}>
             
             {(!listar && detalle) && (
-            <Formulario detalle={detalle} add={false}/>
+            <Formulario detalle={detalle} add={agregar} edit={editar} handleAdd={handleAdd} handleEditar={handleEdit}/>
             )}
 
-            {(!listar && agregar) && (
-            <Formulario detalle={detalle} add={true} handleAdd={handleAdd}/>
-            )}
+          {/*(!listar && agregar) && (
+            <Formulario detalle={detalle} add={agregar} edit={editar} handleAdd={handleAdd} handleEditar={handleEdit}/>
+            )*/}
+
 
             {listar && (
             <Grid item xs={12} md={12} lg={12}>

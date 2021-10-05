@@ -57,12 +57,12 @@ const BootstrapButton = styled(Button)({
 
 
 const FormularioContainer = (props) => {
- const { detalle, add, handleAdd } = props.props;
+ const { detalle, add, handleAdd, handleEditar, edit } = props.props;
 
   const [ formState, setFormState ] = useState({ 
     ...detalle
   });
-  console.log(formState)
+  console.log(props)
 
   const agregarTutorial = () => {
     let params = {
@@ -86,6 +86,35 @@ const FormularioContainer = (props) => {
         respuesta.json().then(body => {
           console.log(body);
           handleAdd();
+        });
+      }).catch(function (error) {
+        // Error :(
+        console.log(error)
+      });
+  }
+
+  const editarTutorial = () => {
+    let params = {
+      "nombre": formState.nombre,
+      "profesor": formState.profesor,
+      "materia": formState.materia,
+      "fecha": formState.fecha
+    };
+
+    console.log(params);
+  
+  fetch(`https://rayentutorialtestapp.azurewebsites.net/updatetutorial/${formState.id}`, {
+  method: 'put',
+  mode: 'cors',
+  headers : { 
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+   },
+  body: JSON.stringify(params),
+      }).then(function(respuesta) {
+        respuesta.json().then(body => {
+          console.log(body);
+          handleEditar();
         });
       }).catch(function (error) {
         // Error :(
@@ -162,6 +191,13 @@ const FormularioContainer = (props) => {
           onClick={agregarTutorial}
           variant="contained" disableRipple>
           AGREGAR
+        </BootstrapButton>
+        )}
+        {edit && (
+          <BootstrapButton           
+          onClick={editarTutorial}
+          variant="contained" disableRipple>
+          EDITAR
         </BootstrapButton>
         )}
                   </Box>
