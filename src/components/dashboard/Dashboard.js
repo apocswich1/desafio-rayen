@@ -190,7 +190,6 @@ function DashboardContent() {
         mode: 'cors',
       }).then(function (respuesta) {
         respuesta.json().then(body => {
-          console.log(body)
           setDetalle(body)
         });
       }).catch(function (err) {

@@ -101,7 +101,6 @@ const FormularioContainer = (props) => {
   const [ formState, setFormState ] = useState(!add ? { 
     ...detalle
   }:{});
-  console.log(props)
 
   const agregarTutorial = () => {
     let params = {
@@ -110,8 +109,6 @@ const FormularioContainer = (props) => {
       "materia": formState.materia,
       "fecha": formState.fecha
     };
-
-    console.log(params);
   
   fetch("https://rayentutorialtestapp.azurewebsites.net/createtutorial", {
   method: 'post',
@@ -123,7 +120,6 @@ const FormularioContainer = (props) => {
   body: JSON.stringify(params),
       }).then(function(respuesta) {
         respuesta.json().then(body => {
-          console.log(body);
           handleAdd();
         });
       }).catch(function (error) {
@@ -139,8 +135,6 @@ const FormularioContainer = (props) => {
       "materia": formState.materia,
       "fecha": formState.fecha
     };
-
-    console.log(params);
   
   fetch(`https://rayentutorialtestapp.azurewebsites.net/updatetutorial/${formState.id}`, {
   method: 'put',
@@ -152,7 +146,6 @@ const FormularioContainer = (props) => {
   body: JSON.stringify(params),
       }).then(function(respuesta) {
         respuesta.json().then(body => {
-          console.log(body);
           handleEditar();
         });
       }).catch(function (error) {
@@ -172,7 +165,6 @@ const FormularioContainer = (props) => {
    },
       }).then(function(respuesta) {
         respuesta.json().then(body => {
-          console.log(body);
           handleEditar();
         });
       }).catch(function (error) {
@@ -182,7 +174,6 @@ const FormularioContainer = (props) => {
   }
 
   const handleFieldChange = event => {
-    console.log(formState)
     event.persist();
     setFormState(formState => ({
       ...formState,
